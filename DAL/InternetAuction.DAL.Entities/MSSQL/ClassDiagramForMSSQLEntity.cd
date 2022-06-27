@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Alphabetical">
+  <Class Name="InternetAuction.DAL.Entities.MSSQL.Autction">
+    <Position X="11.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAEACAAAAAAAAAAAAAAAAgAAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>MSSQL\Autction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetAuction.DAL.Entities.MSSQL.AutctionStatus">
+    <Position X="14.75" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAEBAAAAAAAAAA=</HashCode>
+      <FileName>MSSQL\AutctionStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetAuction.DAL.Entities.MSSQL.Bidding">
+    <Position X="8" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAAAAAAABAAAAAAAAAFAAAAAAAAAAA=</HashCode>
+      <FileName>MSSQL\Bidding.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetAuction.DAL.Entities.MSSQL.ImageId">
+    <Position X="3.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MSSQL\ImageId.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetAuction.DAL.Entities.MSSQL.Lot">
+    <Position X="6.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgACACgAAAAAYAAAAAAAAEAAAAAAAACAA=</HashCode>
+      <FileName>MSSQL\Lot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetAuction.DAL.Entities.MSSQL.LotCategory">
+    <Position X="9.5" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>MSSQL\LotCategory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InternetAuction.DAL.Entities.MSSQL.User">
+    <Position X="4.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAQAAAAAAAAAAAAAAIAAAAAAAggAEAQAAABAAA=</HashCode>
+      <FileName>MSSQL\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

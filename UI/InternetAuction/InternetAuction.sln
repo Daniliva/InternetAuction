@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32602.215
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetAuction", "InternetAuction.csproj", "{5A4300A3-1D2E-47D9-A74D-16335C9C3FA7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{0A2ACDB8-BFB2-4CFE-A879-373E69F2C431}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BLL", "BLL", "{5530DC87-FECC-4564-9B35-571D692F5359}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{6F9D77AF-81EE-419A-B938-CD7F8EDD6F36}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetAuction.DAL.MSSQL", "..\..\DAL\InternetAuction.DAL.MSSQL\InternetAuction.DAL.MSSQL.csproj", "{2AD01A9F-5A52-4982-A14F-3FB554EC935C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetAuction.DAL.MongoDB", "..\..\DAL\InternetAuction.DAL.MongoDB\InternetAuction.DAL.MongoDB.csproj", "{6CEAEE10-2DD8-4B52-9217-D4B6B97FE8AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetAuction.DAL.Entities", "..\..\DAL\InternetAuction.DAL.Entities\InternetAuction.DAL.Entities.csproj", "{6AF3C87F-FAD8-45CB-9970-BC0BD60FD6DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetAuction.DAL.Contract", "..\InternetAuction.DAL.Contract\InternetAuction.DAL.Contract.csproj", "{CB278417-F723-4D0B-96BC-A1E31EE1A621}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetAuction.BLL.Contract", "..\..\BLL\InternetAuction.BLL.Contract\InternetAuction.BLL.Contract.csproj", "{5B69A03A-2AC2-40B6-A226-9F1253F3FB89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetAuction.BLL.DTO", "..\..\BLL\InternetAuction.BLL.DTO\InternetAuction.BLL.DTO.csproj", "{609E7997-1104-4996-9626-A51F808FDF0C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InternetAuction.BLL", "..\..\BLL\InternetAuction.BLL\InternetAuction.BLL.csproj", "{F0D5C7AB-83D0-44FA-8941-E21C9DAB41EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A4300A3-1D2E-47D9-A74D-16335C9C3FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A4300A3-1D2E-47D9-A74D-16335C9C3FA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A4300A3-1D2E-47D9-A74D-16335C9C3FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A4300A3-1D2E-47D9-A74D-16335C9C3FA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AD01A9F-5A52-4982-A14F-3FB554EC935C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AD01A9F-5A52-4982-A14F-3FB554EC935C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AD01A9F-5A52-4982-A14F-3FB554EC935C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AD01A9F-5A52-4982-A14F-3FB554EC935C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CEAEE10-2DD8-4B52-9217-D4B6B97FE8AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CEAEE10-2DD8-4B52-9217-D4B6B97FE8AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CEAEE10-2DD8-4B52-9217-D4B6B97FE8AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CEAEE10-2DD8-4B52-9217-D4B6B97FE8AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AF3C87F-FAD8-45CB-9970-BC0BD60FD6DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF3C87F-FAD8-45CB-9970-BC0BD60FD6DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF3C87F-FAD8-45CB-9970-BC0BD60FD6DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF3C87F-FAD8-45CB-9970-BC0BD60FD6DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB278417-F723-4D0B-96BC-A1E31EE1A621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB278417-F723-4D0B-96BC-A1E31EE1A621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB278417-F723-4D0B-96BC-A1E31EE1A621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB278417-F723-4D0B-96BC-A1E31EE1A621}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B69A03A-2AC2-40B6-A226-9F1253F3FB89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B69A03A-2AC2-40B6-A226-9F1253F3FB89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B69A03A-2AC2-40B6-A226-9F1253F3FB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B69A03A-2AC2-40B6-A226-9F1253F3FB89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{609E7997-1104-4996-9626-A51F808FDF0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{609E7997-1104-4996-9626-A51F808FDF0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{609E7997-1104-4996-9626-A51F808FDF0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{609E7997-1104-4996-9626-A51F808FDF0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0D5C7AB-83D0-44FA-8941-E21C9DAB41EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0D5C7AB-83D0-44FA-8941-E21C9DAB41EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0D5C7AB-83D0-44FA-8941-E21C9DAB41EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0D5C7AB-83D0-44FA-8941-E21C9DAB41EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5A4300A3-1D2E-47D9-A74D-16335C9C3FA7} = {6F9D77AF-81EE-419A-B938-CD7F8EDD6F36}
+		{2AD01A9F-5A52-4982-A14F-3FB554EC935C} = {0A2ACDB8-BFB2-4CFE-A879-373E69F2C431}
+		{6CEAEE10-2DD8-4B52-9217-D4B6B97FE8AF} = {0A2ACDB8-BFB2-4CFE-A879-373E69F2C431}
+		{6AF3C87F-FAD8-45CB-9970-BC0BD60FD6DD} = {0A2ACDB8-BFB2-4CFE-A879-373E69F2C431}
+		{CB278417-F723-4D0B-96BC-A1E31EE1A621} = {0A2ACDB8-BFB2-4CFE-A879-373E69F2C431}
+		{5B69A03A-2AC2-40B6-A226-9F1253F3FB89} = {5530DC87-FECC-4564-9B35-571D692F5359}
+		{609E7997-1104-4996-9626-A51F808FDF0C} = {5530DC87-FECC-4564-9B35-571D692F5359}
+		{F0D5C7AB-83D0-44FA-8941-E21C9DAB41EA} = {5530DC87-FECC-4564-9B35-571D692F5359}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14CC480E-4498-4CA1-AA38-E8F82DAA05CF}
+	EndGlobalSection
+EndGlobal
