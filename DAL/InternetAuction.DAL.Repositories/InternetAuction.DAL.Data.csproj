@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InternetAuction.DAL.Contract\InternetAuction.DAL.Contract.csproj" />
+    <ProjectReference Include="..\InternetAuction.DAL.MSSQL\InternetAuction.DAL.MSSQL.csproj" />
+  </ItemGroup>
+
+</Project>

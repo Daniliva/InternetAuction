@@ -1,19 +1,16 @@
-﻿using System.Collections.Generic;
-
-namespace InternetAuction.DAL.Entities.MSSQL
+﻿namespace InternetAuction.BLL.DTO
 {
-    /// <summary>
-    /// The lot.
-    /// </summary>
-    public class Lot : BaseEntity
+    public class LotModel
     {
+        public int Id { get; set; }
+
         /// <summary>
         /// Gets or sets the author.
         /// </summary>
         /// <value>
         /// The author.
         /// </value>
-        public virtual User Author { get; set; }
+        public virtual UserModel Author { get; set; }
 
         /// <summary>
         /// Gets or sets the category.
@@ -21,7 +18,7 @@ namespace InternetAuction.DAL.Entities.MSSQL
         /// <value>
         /// The category.
         /// </value>
-        public virtual LotCategory Category { get; set; }
+        public virtual LotCategoryModel Category { get; set; }
 
         /// <summary>
         /// Gets or sets the name.
@@ -48,22 +45,14 @@ namespace InternetAuction.DAL.Entities.MSSQL
         public virtual decimal CostMin { get; set; }
 
         /// <summary>
-        /// Gets or sets the photos.
-        /// </summary>
-        /// <value>
-        /// The photos.
-        /// </value>
-        public ICollection<ImageId> Photos { get; set; }
-
-        /// <summary>
         /// Gets or sets the photo current.
         /// </summary>
         /// <value>
         /// The photo current.
-        /// </value>
-        public virtual ImageId PhotoCurrent { get; set; }
 
-        public virtual Autction Autction { get; set; }
+        public byte[] PhotoCurrent { get; set; }
+
+        public virtual AutctionModel Autction { get; set; }
         public virtual int AutctionRef { get; set; }
     }
 }

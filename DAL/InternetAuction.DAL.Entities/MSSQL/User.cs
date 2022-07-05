@@ -15,17 +15,14 @@ namespace InternetAuction.DAL.Entities.MSSQL
         /// <value>
         /// The lots.
         /// </value>
-        public ICollection<Lot> Lots { get; set; }
+        public virtual ICollection<Lot> Lots { get; set; }
 
         /// <summary>
         /// Gets or Sets the avatars.
         /// </summary>
         public ICollection<ImageId> Avatars { get; set; }
 
-        /// <summary>
-        /// Gets or sets the biddings.
-        /// </summary>
-        public ICollection<Bidding> Biddings { get; set; }
+        public virtual ICollection<Bidding> Biddings { get; set; }
 
         /// <summary>
         /// Gets or Sets the current avatar.
@@ -45,6 +42,9 @@ namespace InternetAuction.DAL.Entities.MSSQL
 
     public class RoleUser : IdentityUserRole<string>
     {
+        [PersonalData]
+        public virtual string Id { get; set; }
+
         public virtual User User { get; set; }
         public virtual Role Role { get; set; }
     }

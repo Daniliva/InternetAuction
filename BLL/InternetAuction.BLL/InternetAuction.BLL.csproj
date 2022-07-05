@@ -1,7 +1,17 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DAL\InternetAuction.DAL.Contract\InternetAuction.DAL.Contract.csproj" />
+    <ProjectReference Include="..\InternetAuction.BLL.Contract\InternetAuction.BLL.Contract.csproj" />
+    <ProjectReference Include="..\InternetAuction.BLL.DTO\InternetAuction.BLL.DTO.csproj" />
+  </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -18,8 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\UI\InternetAuction.DAL.Contract\InternetAuction.DAL.Contract.csproj" />
+    <ProjectReference Include="..\InternetAuction.DAL.Contract\InternetAuction.DAL.Contract.csproj" />
     <ProjectReference Include="..\InternetAuction.DAL.Entities\InternetAuction.DAL.Entities.csproj" />
+    <ProjectReference Include="..\InternetAuction.DAL.MongoDB\InternetAuction.DAL.MongoDB.csproj" />
   </ItemGroup>
 
 </Project>

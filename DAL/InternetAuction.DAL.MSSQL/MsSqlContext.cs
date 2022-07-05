@@ -16,15 +16,26 @@ namespace InternetAuction.DAL.MSSQL
         : base(options)
           {
           }*/
+        private string connectionString;
 
         public MsSqlContext()
+        {
+        }
+
+        public MsSqlContext(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
+        public MsSqlContext(DbContextOptions options) : base(options)
         {
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             // optionsBuilder.Use
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=InternetAuction;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(connectionString);
+            //      optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=InternetAuction;Trusted_Connection=True;");
         }
 
         /// <summary>
