@@ -188,11 +188,9 @@ namespace InternetAuction.DAL.MSSQL
                .WithOne(ad => ad.Autction);*/
 
             modelBuilder.Entity<Autction>()
-      .HasOne(a => a.Lot)
-      .WithOne(b => b.Autction)
-      .HasForeignKey<Lot>(b => b.AutctionRef);
-            /*   modelBuilder.Entity<Autction>().
-                   HasOne(c => c.Lot);*/
+                .HasOne(a => a.Lot)
+                .WithOne(b => b.Autction)
+                .HasForeignKey<Lot>(b => b.AutctionRef);
 
             modelBuilder.Entity<User>().
                 HasMany(c => c.Biddings).
@@ -208,6 +206,18 @@ namespace InternetAuction.DAL.MSSQL
             modelBuilder.Entity<Bidding>().
                 Property(p => p.Cost).
                 HasColumnType("decimal");
+
+            modelBuilder.Entity<Role>().HasData(new Role { Id = "1", Name = "Customer" });
+            modelBuilder.Entity<Role>().HasData(new Role { Id = "2", Name = "Owner" });
+            modelBuilder.Entity<Role>().HasData(new Role { Id = "3", Name = "Admin" });
+
+            modelBuilder.Entity<LotCategory>().HasData(new LotCategory { Id = 1, NameCategory = "Arts", DescriptionCategory = "The arts are a very wide range of human practices of creative expression, storytelling and cultural participation. They encompass multiple diverse and plural modes of thinking, doing and being, in an extremely broad range of media. Both highly dynamic and a characteristically constant feature of human life, they have developed into innovative, stylized and sometimes intricate forms." });
+            modelBuilder.Entity<LotCategory>().HasData(new LotCategory { Id = 2, NameCategory = "Books", DescriptionCategory = "A book is a medium for recording information in the form of writing or images, typically composed of many pages (made of papyrus, parchment, vellum, or paper) bound together and protected by a cover.[1] The technical term for this physical arrangement is codex (plural, codices). In the history of hand-held physical supports for extended written compositions or records, the codex replaces its predecessor, the scroll. A single sheet in a codex is a leaf and each side of a leaf is a page." });
+            modelBuilder.Entity<LotCategory>().HasData(new LotCategory { Id = 3, NameCategory = "Antiques", DescriptionCategory = "A true antique (Latin: antiquus; 'old', 'ancient') is an item perceived as having value because of its aesthetic or historical significance, and often defined as at least 100 years old (or some other limit), although the term is often used loosely to describe any object that is old.[1] An antique is usually an item that is collected or desirable because of its age, beauty, rarity, condition, utility, personal emotional connection, and/or other unique features. It is an object that represents a previous era or time period in human history. Vintage and collectible are used to describe items that are old, but do not meet the 100-year criterion." });
+
+            modelBuilder.Entity<AutctionStatus>().HasData(new AutctionStatus { Id = 1, NameStatus = "Start", DescriptionStatus = "Auction is started" });
+            modelBuilder.Entity<AutctionStatus>().HasData(new AutctionStatus { Id = 1, NameStatus = "Finish", DescriptionStatus = "Auction is finished" });
+            modelBuilder.Entity<AutctionStatus>().HasData(new AutctionStatus { Id = 1, NameStatus = "Is not started", DescriptionStatus = "Auction isn't started" });
         }
     }
 }

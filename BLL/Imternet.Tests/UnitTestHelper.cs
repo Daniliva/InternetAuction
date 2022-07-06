@@ -1,9 +1,11 @@
 ﻿using System;
 using AutoMapper;
 using InternetAuction.BLL;
+using InternetAuction.DAL.Contract;
 using InternetAuction.DAL.Entities.MSSQL;
 using InternetAuction.DAL.MSSQL;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 
 namespace Imternet.Tests
 {

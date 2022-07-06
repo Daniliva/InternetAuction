@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace InternetAuction.BLL.Service
 {
-    public class UserService : ICrud<UserModel, string>
+    public class UserService : IExpansionGetEmail<UserModel, string>
     {
         private readonly IUnitOfWorkMSSQL unitOfWorkMSSQL;
         private readonly IMapper _mapper;
@@ -36,8 +36,24 @@ namespace InternetAuction.BLL.Service
             return (await unitOfWorkMSSQL.UserRepository.GetAllAsync()).Select((_mapper.Map<User, UserModel>));
         }
 
+        public async Task<UserModel> GetByEmail(string email)
+        {
+            IsEqual isEqual = (object x) =>
+            {
+                if (x is User user1)
+                {
+                    return user1.Email == email;
+                }
+                else
+                    return false;
+            };
+            var user = (await unitOfWorkMSSQL.UserRepository.GetByFiltererAsync(isEqual));
+            return _mapper.Map<User, UserModel>(user);
+        }
+
         public async Task<UserModel> GetByIdAsync(string id)
         {
+            var t = await unitOfWorkMSSQL.UserRepository.GetByIdWithIncludeAsync(id);
             return _mapper.Map<User, UserModel>(await unitOfWorkMSSQL.UserRepository.GetByIdWithIncludeAsync(id));
         }
 

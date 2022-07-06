@@ -30,11 +30,26 @@ namespace Imternet.Tests.BusinessTests
 
             //act
             var actual = await userService.GetAllAsync();
-            var t = 0;
-            foreach (var entity in actual)
-            {
-                t++;
-            }
+
+            //assert
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public async Task UserService_GetById_ReturnsUserModel()
+        {
+            //arrange
+            var expected = GetTestUserModels.First();
+            var mockUnitOfWork = new Mock<IUnitOfWorkMSSQL>();
+
+            mockUnitOfWork
+                .Setup(m => m.UserRepository.GetByIdWithIncludeAsync(It.IsAny<string>()))
+                .ReturnsAsync(GetTestUserEntities.First());
+
+            var UserService = new UserService(mockUnitOfWork.Object, UnitTestHelper.CreateMapperProfile());
+
+            //act
+            var actual = await UserService.GetByIdAsync("1");
 
             //assert
             actual.Should().BeEquivalentTo(expected);
@@ -64,7 +79,8 @@ namespace Imternet.Tests.BusinessTests
         public List<User> GetTestUserEntities =>
             new List<User>()
             {
-               new User { Id = "1", UserName = "Viktor", Email = "Zhuk",  PasswordHash = "1111" },
+               new User { Id = "1", UserName = "Viktor", Email = "Zhuk",  PasswordHash = "1111",UserRoles=new List<RoleUser>(){
+  new RoleUser(){ Id="1",RoleId="1",UserId="1" } } },
                 new User { Id = "2", UserName = "Nassim", Email = "Taleb",PasswordHash = "1111"},
                 new User { Id = "3", UserName = "Desmond", Email = "Morris", PasswordHash = "1111" },
                 new User { Id ="4", UserName = "Lebron", Email = "James", PasswordHash = "1111" }
