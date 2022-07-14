@@ -32,7 +32,8 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Data
 
         public async Task<IEnumerable<LotCategory>> GetAllAsync()
         {
-            return await _context.LotCategories.ToListAsync();
+            var result = await _context.LotCategories.ToListAsync();
+            return result;
         }
 
         public async Task<LotCategory> GetByFiltererAsync(IsEqual func)

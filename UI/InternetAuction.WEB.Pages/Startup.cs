@@ -12,6 +12,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Configuration;
+using InternetAuction.BLL.Contract;
+using InternetAuction.BLL;
+using InternetAuction.BLL.DTO;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace InternetAuction.WEB.Pages
 {
@@ -34,28 +38,49 @@ namespace InternetAuction.WEB.Pages
             var temp2 = Configuration.GetConnectionString("MongoConnectionString");
 
             //      ConfigurationManager.ConnectionStrings["MongoConnectionString"].ConnectionString;
+
+            //    services.AddSingleton<IUnitOfWorkMSSQL>());
+
+            IFactory factory = new ServiceFactory(new UnitOfWorkMSSQL(new string[] { abc, temp2 }));
+            services.AddSingleton<IExpansionGetEmail<UserModel, string>>(factory.Get<IExpansionGetEmail<UserModel, string>>());
+            services.AddSingleton<ICrud<RoleUserModel, string>>(factory.Get<ICrud<RoleUserModel, string>>());
+            services.AddSingleton<ICrud<RoleModel, string>>(factory.Get<ICrud<RoleModel, string>>());
+
+            services.AddSingleton<ICrud<LotModel, int>>(factory.Get<ICrud<LotModel, int>>());
+
+            services.AddSingleton<ICrud<LotCategoryModel, int>>(factory.Get<ICrud<LotCategoryModel, int>>());
+            services.AddSingleton<ICrud<AutctionStatusModel, int>>(factory.Get<ICrud<AutctionStatusModel, int>>());
+            //services.AddSingleton<IExpansionGetEmail<UserModel, string>>(factory.Get<IExpansionGetEmail<UserModel, string>>());
             services.AddControllersWithViews();
-            services.AddSingleton<IUnitOfWorkMSSQL>(new UnitOfWorkMSSQL(new string[] { abc, temp2 }));
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => //CookieAuthenticationOptions
+                {
+                    //    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/User/Login");
+                    //    options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/User/Login");
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            /*   if (env.IsDevelopment())
+               {
+                   app.UseDeveloperExceptionPage();
+               }
+               else
+               {
+                   app.UseExceptionHandler("/Home/Error");
+                   // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                   app.UseHsts();
+               }*/
+            app.UseDeveloperExceptionPage();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

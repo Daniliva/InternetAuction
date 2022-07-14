@@ -1,0 +1,62 @@
+﻿@model InternetAuction.BLL.DTO.UserModel
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h4>Account</h4>
+
+<div>
+
+	<hr />
+	<dl class="row">
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Id)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Id)
+		</dd>
+
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.Email)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.Email)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.UserName)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.UserName)
+		</dd>
+		<dt class="col-sm-2">
+			@Html.DisplayNameFor(model => model.RoleUsers)
+		</dt>
+		<dd class="col-sm-10">
+		</dd>
+		@foreach (var role in Model.RoleUsers)
+		{
+			<dt class="col-sm-2">
+			</dt>
+			<dd class="col-sm-10">
+				@role.Roles.Name
+			</dd>
+
+		}
+	</dl>
+</div>
+<div>
+	@Html.ActionLink("EditPersonalData", "EditPersonalData", new { id = Model.Id })
+	@{
+		System.Diagnostics.Debug.Assert(Context.User.Identity != null, "Context.User.Identity != null");
+	}
+	@if (Context.User.Identity.IsAuthenticated)
+	{
+		@if (Context.User.IsInRole("Admin"))
+		{
+			<div>|</div>
+			<a asp-action="List">Back to List</a>
+		}
+	}
+	|
+</div>

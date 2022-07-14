@@ -11,45 +11,50 @@ using System.Threading.Tasks;
 
 namespace InternetAuction.BLL.Service
 {
-    /// <summary>
-    /// The auction status service.
-    /// </summary>
-    public class AuctionStatusService : ICrud<AutctionStatusModel, int>
-    {
-        private readonly IUnitOfWorkMSSQL unitOfWorkMSSQL;
-        private readonly IMapper _mapper;
+	/// <summary>
+	/// The auction status service.
+	/// </summary>
+	public class AuctionStatusService : ICrud<AutctionStatusModel, int>
+	{
+		private readonly IUnitOfWorkMSSQL unitOfWorkMSSQL;
+		private readonly IMapper _mapper;
 
-        public AuctionStatusService(IUnitOfWorkMSSQL unitOfWorkMSSQL, IMapper mapper)
-        {
-            this.unitOfWorkMSSQL = unitOfWorkMSSQL;
-            _mapper = mapper;
-        }
+		public AuctionStatusService(IUnitOfWorkMSSQL unitOfWorkMSSQL, IMapper mapper)
+		{
+			this.unitOfWorkMSSQL = unitOfWorkMSSQL;
+			_mapper = mapper;
+		}
 
-        public async Task AddAsync(AutctionStatusModel model)
-        {
-            var product = _mapper.Map<AutctionStatusModel, AutctionStatus>(model);
-            await unitOfWorkMSSQL.AutctionStatusRepository.AddAsync(product);
-        }
+		public async Task AddAsync(AutctionStatusModel model)
+		{
+			var product = _mapper.Map<AutctionStatusModel, AutctionStatus>(model);
+			await unitOfWorkMSSQL.AutctionStatusRepository.AddAsync(product);
+		}
 
-        public async Task DeleteAsync(int modelId)
-        {
-            await unitOfWorkMSSQL.AutctionStatusRepository.DeleteByIdAsync(modelId);
-        }
+		public async Task DeleteAsync(int modelId)
+		{
+			await unitOfWorkMSSQL.AutctionStatusRepository.DeleteByIdAsync(modelId);
+		}
 
-        public async Task<IEnumerable<AutctionStatusModel>> GetAllAsync()
-        {
-            return (await unitOfWorkMSSQL.AutctionStatusRepository.GetAllAsync()).Select((_mapper.Map<AutctionStatus, AutctionStatusModel>));
-        }
+		public Task DeleteObjectAsync(AutctionStatusModel model)
+		{
+			throw new NotImplementedException();
+		}
 
-        public async Task<AutctionStatusModel> GetByIdAsync(int id)
-        {
-            return _mapper.Map<AutctionStatus, AutctionStatusModel>(await unitOfWorkMSSQL.AutctionStatusRepository.GetByIdWithIncludeAsync(id));
-        }
+		public async Task<IEnumerable<AutctionStatusModel>> GetAllAsync()
+		{
+			return (await unitOfWorkMSSQL.AutctionStatusRepository.GetAllAsync()).Select((_mapper.Map<AutctionStatus, AutctionStatusModel>));
+		}
 
-        public async Task UpdateAsync(AutctionStatusModel model)
-        {
-            unitOfWorkMSSQL.AutctionStatusRepository.Update(_mapper.Map<AutctionStatusModel, AutctionStatus>(model));
-            await unitOfWorkMSSQL.SaveAsync();
-        }
-    }
+		public async Task<AutctionStatusModel> GetByIdAsync(int id)
+		{
+			return _mapper.Map<AutctionStatus, AutctionStatusModel>(await unitOfWorkMSSQL.AutctionStatusRepository.GetByIdWithIncludeAsync(id));
+		}
+
+		public async Task UpdateAsync(AutctionStatusModel model)
+		{
+			unitOfWorkMSSQL.AutctionStatusRepository.Update(_mapper.Map<AutctionStatusModel, AutctionStatus>(model));
+			await unitOfWorkMSSQL.SaveAsync();
+		}
+	}
 }

@@ -10,23 +10,23 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InternetAuction.DAL.MSSQL.Migrations
 {
     [DbContext(typeof(MsSqlContext))]
-    [Migration("20220626223805_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220713093443_CorrectNameing1")]
+    partial class CorrectNameing1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.26")
+                .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.Autction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
@@ -49,7 +49,7 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("DescriptionStatus")
                         .HasColumnType("nvarchar(max)");
@@ -60,6 +60,26 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AutctionStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DescriptionStatus = "Auction is started",
+                            NameStatus = "Start"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DescriptionStatus = "Auction is finished",
+                            NameStatus = "Finish"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DescriptionStatus = "Auction isn't started",
+                            NameStatus = "Is not started"
+                        });
                 });
 
             modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.Bidding", b =>
@@ -67,7 +87,7 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int?>("AutctionId")
                         .HasColumnType("int");
@@ -95,7 +115,7 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("ImageeId")
                         .HasColumnType("nvarchar(max)");
@@ -120,7 +140,7 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<int>("AutctionRef")
                         .HasColumnType("int");
@@ -162,7 +182,7 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .UseIdentityColumn();
 
                     b.Property<string>("DescriptionCategory")
                         .HasColumnType("nvarchar(max)");
@@ -173,207 +193,118 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LotCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DescriptionCategory = "The arts are a very wide range of human practices of creative expression, storytelling and cultural participation. They encompass multiple diverse and plural modes of thinking, doing and being, in an extremely broad range of media. Both highly dynamic and a characteristically constant feature of human life, they have developed into innovative, stylized and sometimes intricate forms.",
+                            NameCategory = "Arts"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DescriptionCategory = "A book is a medium for recording information in the form of writing or images, typically composed of many pages (made of papyrus, parchment, vellum, or paper) bound together and protected by a cover.[1] The technical term for this physical arrangement is codex (plural, codices). In the history of hand-held physical supports for extended written compositions or records, the codex replaces its predecessor, the scroll. A single sheet in a codex is a leaf and each side of a leaf is a page.",
+                            NameCategory = "Books"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DescriptionCategory = "A true antique (Latin: antiquus; 'old', 'ancient') is an item perceived as having value because of its aesthetic or historical significance, and often defined as at least 100 years old (or some other limit), although the term is often used loosely to describe any object that is old.[1] An antique is usually an item that is collected or desirable because of its age, beauty, rarity, condition, utility, personal emotional connection, and/or other unique features. It is an object that represents a previous era or time period in human history. Vintage and collectible are used to describe items that are old, but do not meet the 100-year criterion.",
+                            NameCategory = "Antiques"
+                        });
                 });
 
             modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.Role", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+                    b.ToTable("Roles");
 
-                    b.ToTable("AspNetRoles");
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Name = "Customer"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            Name = "Owner"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Name = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.RoleUser", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("UserId", "RoleId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.User", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
 
                     b.Property<int?>("AvatarCurrentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AvatarCurrentId");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("RoleUser", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
+                    b.Property<string>("RolesId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<string>("UsersId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
+                    b.HasKey("RolesId", "UsersId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UsersId");
 
-                    b.ToTable("AspNetUserClaims");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("RoleUser");
                 });
 
             modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.Autction", b =>
@@ -381,6 +312,8 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.HasOne("InternetAuction.DAL.Entities.MSSQL.AutctionStatus", "Status")
                         .WithMany("Autctions")
                         .HasForeignKey("StatusId");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.Bidding", b =>
@@ -392,6 +325,10 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.HasOne("InternetAuction.DAL.Entities.MSSQL.User", "User")
                         .WithMany("Biddings")
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Autction");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.ImageId", b =>
@@ -424,21 +361,29 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.HasOne("InternetAuction.DAL.Entities.MSSQL.ImageId", "PhotoCurrent")
                         .WithMany()
                         .HasForeignKey("PhotoCurrentId");
+
+                    b.Navigation("Autction");
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("PhotoCurrent");
                 });
 
             modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.RoleUser", b =>
                 {
                     b.HasOne("InternetAuction.DAL.Entities.MSSQL.Role", "Role")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("RoleId");
 
                     b.HasOne("InternetAuction.DAL.Entities.MSSQL.User", "User")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Role");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.User", b =>
@@ -446,42 +391,54 @@ namespace InternetAuction.DAL.MSSQL.Migrations
                     b.HasOne("InternetAuction.DAL.Entities.MSSQL.ImageId", "AvatarCurrent")
                         .WithMany()
                         .HasForeignKey("AvatarCurrentId");
+
+                    b.Navigation("AvatarCurrent");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("RoleUser", b =>
                 {
                     b.HasOne("InternetAuction.DAL.Entities.MSSQL.Role", null)
                         .WithMany()
-                        .HasForeignKey("RoleId")
+                        .HasForeignKey("RolesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("InternetAuction.DAL.Entities.MSSQL.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.Autction", b =>
                 {
-                    b.HasOne("InternetAuction.DAL.Entities.MSSQL.User", null)
-                        .WithMany("Claims")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Biddings");
+
+                    b.Navigation("Lot");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.AutctionStatus", b =>
                 {
-                    b.HasOne("InternetAuction.DAL.Entities.MSSQL.User", null)
-                        .WithMany("Logins")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Autctions");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.Lot", b =>
                 {
-                    b.HasOne("InternetAuction.DAL.Entities.MSSQL.User", null)
-                        .WithMany("Tokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Photos");
+                });
+
+            modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.LotCategory", b =>
+                {
+                    b.Navigation("Lots");
+                });
+
+            modelBuilder.Entity("InternetAuction.DAL.Entities.MSSQL.User", b =>
+                {
+                    b.Navigation("Avatars");
+
+                    b.Navigation("Biddings");
+
+                    b.Navigation("Lots");
                 });
 #pragma warning restore 612, 618
         }

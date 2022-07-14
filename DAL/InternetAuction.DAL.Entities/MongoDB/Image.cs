@@ -9,7 +9,7 @@ namespace InternetAuction.DAL.Entities.MongoDB
     /// <summary>
     /// The image.
     /// </summary>
-    public class Image : BaseEntity
+    public class Image// : BaseEntity
     {
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }

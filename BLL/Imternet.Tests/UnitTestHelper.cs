@@ -41,9 +41,9 @@ namespace Imternet.Tests
             context.Roles.AddRange(
                 new Role { Id = "1", Name = "Role1" },
                 new Role { Id = "2", Name = "Role1" });
-            context.UserRoles.AddRange(
-                new RoleUser { Id = "1", UserId = "1", RoleId = "1" },
-                new RoleUser { Id = "2", UserId = "2", RoleId = "2" });
+            /* context.UserRoles.AddRange(
+                 new RoleUser { Id = "1" },
+                 new RoleUser { Id = "2" });*/
             context.LotCategories.AddRange(
                 new LotCategory { Id = 1, NameCategory = "NameCategory1", DescriptionCategory = "DescriptionCategory1" },
                  new LotCategory { Id = 2, NameCategory = "NameCategory2", DescriptionCategory = "DescriptionCategory2" });

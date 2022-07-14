@@ -15,9 +15,28 @@ namespace InternetAuction.BLL
            .ReverseMap();
 
             CreateMap<User, UserModel>();
-            CreateMap<Role, RoleModel>();
-            CreateMap<RoleUser, RoleUserModel>();
+            CreateMap<UserModel, User>();
 
+            CreateMap<Role, RoleModel>();
+            CreateMap<RoleModel, Role>();
+
+            CreateMap<RoleUser, RoleUserModel>();
+            CreateMap<RoleUserModel, RoleUser>();
+
+            CreateMap<Lot, LotModel>();
+            CreateMap<LotModel, Lot>();
+
+            CreateMap<LotCategory, LotCategoryModel>();
+            CreateMap<LotCategoryModel, LotCategory>();
+
+            CreateMap<Autction, AutctionModel>();
+            CreateMap<AutctionModel, Autction>();
+
+            CreateMap<AutctionStatus, AutctionStatusModel>();
+            CreateMap<AutctionStatusModel, AutctionStatus>();
+
+            CreateMap<Bidding, BiddingModel>();
+            CreateMap<BiddingModel, Bidding>();
         }
     }
 }

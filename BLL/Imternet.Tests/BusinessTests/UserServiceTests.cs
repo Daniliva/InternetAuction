@@ -60,17 +60,16 @@ namespace Imternet.Tests.BusinessTests
         public List<UserModel> GetTestUserModels =>
             new List<UserModel>()
             {
-                new UserModel { Id = "1", UserName = "Viktor", Email = "Zhuk",  PasswordHash = "1111",AvatarCurrent=new byte[0],UserRoles =new List<RoleUserModel>()},
-                new UserModel { Id = "2", UserName = "Nassim", Email = "Taleb",  PasswordHash = "1111",AvatarCurrent=new byte[0],UserRoles =new List<RoleUserModel>()},
-                new UserModel { Id = "3", UserName = "Desmond", Email = "Morris", PasswordHash = "1111",AvatarCurrent=new byte[0],UserRoles=new List<RoleUserModel>() },
-                new UserModel { Id ="4", UserName = "Lebron", Email = "James", PasswordHash = "1111",AvatarCurrent=new byte[0],UserRoles=new List<RoleUserModel>() }
+                // //   new UserModel { Id = "1", UserName = "Viktor", Email = "Zhuk",  PasswordHash = "1111",AvatarCurrent=new byte[0],UserRoles =new List<RoleUserModel>()},
+                //    new UserModel { Id = "2", UserName = "Nassim", Email = "Taleb",  PasswordHash = "1111",AvatarCurrent=new byte[0],UserRoles =new List<RoleUserModel>()},
+                //   new UserModel { Id = "3", UserName = "Desmond", Email = "Morris", PasswordHash = "1111",AvatarCurrent=new byte[0],UserRoles=new List<RoleUserModel>() },
+                //   new UserModel { Id ="4", UserName = "Lebron", Email = "James", PasswordHash = "1111",AvatarCurrent=new byte[0],UserRoles=new List<RoleUserModel>() }
             };
 
         public List<User> GetTestPersonEntities =>
            new List<User>()
-           {  new User { Id = "1", UserName = "Viktor", Email = "Zhuk",  PasswordHash = "1111",UserRoles=new List<RoleUser>(){
-  new RoleUser(){ Id="1",RoleId="1",UserId="1" }
-           } },
+           {  new User { Id = "1", UserName = "Viktor", Email = "Zhuk",  PasswordHash = "1111",
+            },
                 new User { Id = "2", UserName = "Nassim", Email = "Taleb",PasswordHash = "1111"},
                 new User { Id = "3", UserName = "Desmond", Email = "Morris", PasswordHash = "1111" },
                 new User { Id ="4", UserName = "Lebron", Email = "James", PasswordHash = "1111" }
@@ -79,8 +78,7 @@ namespace Imternet.Tests.BusinessTests
         public List<User> GetTestUserEntities =>
             new List<User>()
             {
-               new User { Id = "1", UserName = "Viktor", Email = "Zhuk",  PasswordHash = "1111",UserRoles=new List<RoleUser>(){
-  new RoleUser(){ Id="1",RoleId="1",UserId="1" } } },
+               new User { Id = "1", UserName = "Viktor", Email = "Zhuk",  PasswordHash = "1111" },
                 new User { Id = "2", UserName = "Nassim", Email = "Taleb",PasswordHash = "1111"},
                 new User { Id = "3", UserName = "Desmond", Email = "Morris", PasswordHash = "1111" },
                 new User { Id ="4", UserName = "Lebron", Email = "James", PasswordHash = "1111" }

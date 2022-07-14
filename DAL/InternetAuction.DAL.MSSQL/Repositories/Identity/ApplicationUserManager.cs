@@ -7,9 +7,9 @@ using Microsoft.Extensions.Options;
 
 namespace InternetAuction.DAL.MSSQL.Repositories.Identity
 {
-    public class ApplicationUserManager : UserManager<User>
+    /*   public class ApplicationUserManager : UserManager<User>
     {
-        public ApplicationUserManager(IUserStore<User> store, IOptions<IdentityOptions> optionsAccessor,
+     public ApplicationUserManager(IUserStore<User> store, IOptions<IdentityOptions> optionsAccessor,
             IPasswordHasher<User> passwordHasher, IEnumerable<IUserValidator<User>> userValidators,
             IEnumerable<IPasswordValidator<User>> passwordValidators, ILookupNormalizer keyNormalizer,
             IdentityErrorDescriber errors, IServiceProvider services, ILogger<UserManager<User>> logger)
@@ -17,6 +17,6 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Identity
         {
         }
     }
-
+*/
     // public class ApplicationRoleUserManager:RoleUser
 }

@@ -24,9 +24,20 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Data
 
         public async Task AddAsync(Lot entity)
         {
-            await _context.Lots.AddAsync(entity);
-
-            var lot = await _context.Lots.FirstAsync(x => x.Name == entity.Name && (x.Description == entity.Description) && x.CostMin == entity.CostMin);
+            var user = _context.Users.FirstOrDefault(x => x.Id == entity.Author.Id);
+            var autctionStatuses = _context.AutctionStatuses.FirstOrDefault(x => x.Id == entity.Autction.Status.Id);
+            var lotCategories = _context.LotCategories.First(x => x.Id == entity.Category.Id);
+            lotCategories.Lots = new List<Lot>();
+            entity.Author = null;
+            entity.Autction.Status = null;
+            entity.Category = null;
+            autctionStatuses.Autctions = new List<Autction>();
+            autctionStatuses.Autctions.Add(entity.Autction);
+            lotCategories.Lots.Add(entity);
+            user.Lots.Add(entity);
+            _context.SaveChanges();
+            //   entity.Autction.Lot.Add();
+            var lot = await _context.Lots.FirstAsync(x => x.Id == entity.Id);
             Image image = new Image();
             image.ImageId = lot.Id.ToString();
             await imageContext.Create(image);
@@ -37,6 +48,7 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Data
             await _context.SaveChangesAsync();
             lot.PhotoCurrent = _context.ImageIds.First(x => x.ImageeId == imageId.ImageeId);
             Update(lot);
+            _context.SaveChanges();
         }
 
         public void Delete(Lot entity)
@@ -84,7 +96,7 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Data
         public async Task<Lot> GetByIdWithIncludeAsync(int id)
         {
             return await _context.Lots.
-                Include(x => x.Autction).
+                Include(x => x.Autction).ThenInclude(x=>x.Status).
                 Include(x => x.Author).
                 Include(x => x.Category).
                 Include(x => x.PhotoCurrent).

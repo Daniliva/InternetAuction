@@ -50,7 +50,7 @@
         /// <value>
         /// The photo current.
 
-        public byte[] PhotoCurrent { get; set; }
+        //public byte[] PhotoCurrent { get; set; }
 
         public virtual AutctionModel Autction { get; set; }
         public virtual int AutctionRef { get; set; }

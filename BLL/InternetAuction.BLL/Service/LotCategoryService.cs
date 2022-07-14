@@ -34,9 +34,17 @@ namespace InternetAuction.BLL.Service
             await unitOfWorkMSSQL.LotCategoryRepository.DeleteByIdAsync(modelId);
         }
 
+        public Task DeleteObjectAsync(LotCategoryModel model)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task<IEnumerable<LotCategoryModel>> GetAllAsync()
         {
-            return (await unitOfWorkMSSQL.LotCategoryRepository.GetAllAsync()).Select((_mapper.Map<LotCategory, LotCategoryModel>));
+            var returnValue = await unitOfWorkMSSQL.LotCategoryRepository.GetAllAsync();
+            var result = returnValue.Select((_mapper.Map<LotCategory, LotCategoryModel>)).ToList();
+
+            return result;
         }
 
         public async Task<LotCategoryModel> GetByIdAsync(int id)
