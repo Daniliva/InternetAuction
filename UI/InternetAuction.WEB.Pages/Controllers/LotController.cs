@@ -50,16 +50,26 @@ namespace InternetAuction.WEB.Pages.Controllers
             return View(await lotService.GetAllAsync());
         }
 
+        /// <summary>
+        /// Yours the lot.
+        /// </summary>
+        /// <returns>A Task.</returns>
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult> YourLot()
         {
             var nameUser = HttpContext.User.Identity.Name;
-            var user = userService.GetByEmail(nameUser).Result;
+            var user = await userService.GetByEmail(nameUser);
 
             var collection = user.Lots.Select(x => lotService.GetByIdAsync(x.Id).Result).ToList();
 
             return View(collection);
         }
 
+        /// <summary>
+        /// Details the.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>A Task.</returns>
         public async Task<ActionResult> Details(int id)
         {
             var lot = await lotService.GetByIdAsync(id);
@@ -72,6 +82,11 @@ namespace InternetAuction.WEB.Pages.Controllers
         }
 
         // GET: LotController/Create
+        /// <summary>
+        /// Creates the.
+        /// </summary>
+        /// <returns>A Task.</returns>
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult> Create()
         {
             LotInfo lotInfo = new LotInfo();
@@ -84,6 +99,12 @@ namespace InternetAuction.WEB.Pages.Controllers
         }
 
         // POST: LotController/Create
+        /// <summary>
+        /// Creates the.
+        /// </summary>
+        /// <param name="collection">The collection.</param>
+        /// <returns>A Task.</returns>
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(LotInfo collection)
@@ -114,6 +135,12 @@ namespace InternetAuction.WEB.Pages.Controllers
         }
 
         // GET: LotController/Edit/5
+        /// <summary>
+        /// Edits the.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>A Task.</returns>
+        [Authorize(Roles = "Owner")]
         public async Task<ActionResult> Edit(int id)
         {
             var lot = await lotService.GetByIdAsync(id);
@@ -145,6 +172,7 @@ namespace InternetAuction.WEB.Pages.Controllers
         /// <param name="id">The id.</param>
         /// <param name="collection">The collection.</param>
         /// <returns>A Task.</returns>
+        [Authorize(Roles = "Owner")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, LotInfo collection)

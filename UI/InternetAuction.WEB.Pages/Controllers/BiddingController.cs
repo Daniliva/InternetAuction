@@ -1,5 +1,6 @@
 ﻿using InternetAuction.BLL.Contract;
 using InternetAuction.BLL.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace InternetAuction.WEB.Pages.Controllers
 {
+    /// <summary>
+    /// The bidding controller.
+    /// </summary>
+    [Authorize]
     public class BiddingController : Controller
     {
         private readonly IExpansionGetEmail<UserModel, string> userService;
@@ -29,6 +34,10 @@ namespace InternetAuction.WEB.Pages.Controllers
         }
 
         // GET: BiddingController
+        /// <summary>
+        /// Indices the.
+        /// </summary>
+        /// <returns>An ActionResult.</returns>
         public ActionResult Index()
         {
             var nameUser = HttpContext.User.Identity.Name;
@@ -37,7 +46,11 @@ namespace InternetAuction.WEB.Pages.Controllers
             return View(user.Biddings);
         }
 
-        // GET: BiddingController/Details/5
+        /// <summary>
+        /// Details the.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>An ActionResult.</returns>
         public ActionResult Details(int id)
         {
             var nameUser = HttpContext.User.Identity.Name;
@@ -61,6 +74,12 @@ namespace InternetAuction.WEB.Pages.Controllers
         }
 
         // POST: BiddingController/Create
+        /// <summary>
+        /// Creates the async.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="collection">The collection.</param>
+        /// <returns>A Task.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateAsync(int id, BiddingModel collection)
@@ -85,12 +104,23 @@ namespace InternetAuction.WEB.Pages.Controllers
         }
 
         // GET: BiddingController/Delete/5
+        /// <summary>
+        /// Deletes the.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>An ActionResult.</returns>
         public ActionResult Delete(int id)
         {
             return View(biddingService.GetByIdAsync(id).Result);
         }
 
         // POST: BiddingController/Delete/5
+        /// <summary>
+        /// Deletes the async.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="collection">The collection.</param>
+        /// <returns>A Task.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteAsync(int id, IFormCollection collection)

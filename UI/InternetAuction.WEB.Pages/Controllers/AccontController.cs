@@ -37,16 +37,6 @@ namespace InternetAuction.WEB.Pages.Controllers
             this.userService = userService;
         }
 
-        /*
-        /// <summary>
-        /// Indices the.
-        /// </summary>
-        /// <returns>An ActionResult.</returns>
-        public ActionResult Index()
-        {
-            return View();
-        }*/
-
         /// <summary>
         /// Logs the out.
         /// </summary>
@@ -98,6 +88,10 @@ namespace InternetAuction.WEB.Pages.Controllers
             }
         }
 
+        /// <summary>
+        /// Logs the in.
+        /// </summary>
+        /// <returns>An ActionResult.</returns>
         public ActionResult LogIn()
         {
             return View();

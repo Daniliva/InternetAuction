@@ -22,6 +22,12 @@ namespace InternetAuction.WEB.Pages.Controllers
         private ICrud<RoleUserModel, string> roleUserService;
         private ICrud<RoleModel, string> roleService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserController"/> class.
+        /// </summary>
+        /// <param name="userService">The user service.</param>
+        /// <param name="roleService">The role service.</param>
+        /// <param name="roleUserService">The role user service.</param>
         public UserController(IExpansionGetEmail<UserModel, string> userService, ICrud<RoleModel, string> roleService, ICrud<RoleUserModel, string> roleUserService)
         {
             this.roleService = roleService;
@@ -30,7 +36,10 @@ namespace InternetAuction.WEB.Pages.Controllers
             //   Method();
         }
 
-        [Authorize]
+        /// <summary>
+        /// Indices the.
+        /// </summary>
+        /// <returns>A Task.</returns>
         public async Task<ActionResult> Index()
         {
             var nameUser = HttpContext.User.Identity.Name;
@@ -38,11 +47,11 @@ namespace InternetAuction.WEB.Pages.Controllers
             return View(await userService.GetByEmail(nameUser));
         }
 
-        /*	public async Task<ActionResult> Details(string id)
-			{
-				return View(await userService.GetByIdAsync(id));
-			}*/
-
+        /// <summary>
+        /// Edits the.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>A Task.</returns>
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(string id)
         {
@@ -67,6 +76,12 @@ namespace InternetAuction.WEB.Pages.Controllers
             return NotFound();
         }
 
+        /// <summary>
+        /// Edits the.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="roles">The roles.</param>
+        /// <returns>A Task.</returns>
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -105,7 +120,12 @@ namespace InternetAuction.WEB.Pages.Controllers
             }
         }
 
-        [Authorize]
+        /// <summary>
+        /// Edits the personal data.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>A Task.</returns>
+
         public async Task<ActionResult> EditPersonalData(string id)
         {
             var user = await userService.GetByIdAsync(id);
@@ -118,7 +138,13 @@ namespace InternetAuction.WEB.Pages.Controllers
             return NotFound();
         }
 
-        [Authorize]
+        /// <summary>
+        /// Edits the personal data.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <param name="collection">The collection.</param>
+        /// <returns>A Task.</returns>
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditPersonalData(string id, UserModel collection)
@@ -139,26 +165,10 @@ namespace InternetAuction.WEB.Pages.Controllers
             }
         }
 
-        /*
-		public ActionResult Delete(int id)
-		{
-			return View();
-		}
-
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
-		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
-		}*/
-
+        /// <summary>
+        /// Lists the async.
+        /// </summary>
+        /// <returns>A Task.</returns>
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> ListAsync()
         {
