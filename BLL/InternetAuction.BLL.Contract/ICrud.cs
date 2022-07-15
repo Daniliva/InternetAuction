@@ -51,6 +51,11 @@ namespace InternetAuction.BLL.Contract
         /// <returns>The result.</returns>
         Task DeleteAsync(TKey modelId);
 
+        /// <summary>
+        /// Deletes the object asynchronous.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         Task DeleteObjectAsync(TModel model);
     }
 }

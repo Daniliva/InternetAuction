@@ -31,7 +31,8 @@ namespace InternetAuction.BLL.Service
 
         public async Task DeleteAsync(int modelId)
         {
-            await unitOfWorkMSSQL.BiddingRepository.DeleteByIdAsync(modelId);
+            await unitOfWorkMSSQL.BiddingRepository.DeleteByIdAsync(modelId); 
+            await unitOfWorkMSSQL.SaveAsync();
         }
 
         public Task DeleteObjectAsync(BiddingModel model)
