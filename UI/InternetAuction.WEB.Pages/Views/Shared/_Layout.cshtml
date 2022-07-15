@@ -19,29 +19,34 @@
                     @{
                         System.Diagnostics.Debug.Assert(Context.User.Identity != null, "Context.User.Identity != null");
                     }
-                    <ul class="navbar-nav flex-grow-1">
-                        @if (!Context.User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogIn">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Registration">Registration</a>
-                            </li>
+                              <ul class="navbar-nav flex-grow-1">
+                                  @if (!Context.User.Identity.IsAuthenticated)
+                                  {
+                                      <li class="nav-item">
+                                          <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogIn">Login</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Registration">Registration</a>
+                                      </li>
 
-                        }
-                        else
-                        {
+                                  }
+                                  else
+                                  {
 
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                            </li>
-
-                        }
-                    </ul>
+                                      <li class="nav-item">
+                                          <a class="nav-link text-dark" asp-area="" asp-controller="Lot" asp-action="Index">Lot</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link text-dark" asp-area="" asp-controller="Bidding" asp-action="Index">Bidding</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">User</a>
+                                      </li>
+                                      <li class="nav-item">
+                                          <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
+                                      </li>
+                                  }
+                              </ul>
                 </div>
             </div>
         </nav>

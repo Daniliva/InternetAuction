@@ -62,7 +62,7 @@ namespace InternetAuction.BLL.Contract.Validation
         /// <returns></returns>
         public static bool UserCheck(User product)
         {
-            return !(ObjectNullCheck(product) && ObjectNullCheck(product.RoleUsers) && ObjectNullCheck(product.UserName) && ObjectNullCheck(product.Email))
+            return !(ObjectNullCheck(product) && ObjectNullCheck(product.RoleUsers) && ObjectNullCheck(product.UserName) && ObjectNullCheck(product.Email));
         }
 
         /// <summary>
@@ -72,7 +72,17 @@ namespace InternetAuction.BLL.Contract.Validation
         /// <returns></returns>
         public static bool LotCheck(Lot product)
         {
-            return !(ObjectNullCheck(product) && ObjectNullCheck(product.Author) && ObjectNullCheck(product.Autction))
+            return !(ObjectNullCheck(product) && ObjectNullCheck(product.Author) && ObjectNullCheck(product.Autction)) && DataCheck(product.Autction.Start, product.Autction.End);
+        }
+
+        /// <summary>
+        /// Biddings the check.
+        /// </summary>
+        /// <param name="product">The product.</param>
+        /// <returns></returns>
+        public static bool BiddingCheck(Bidding product)
+        {
+            return !(ObjectNullCheck(product) && ObjectNullCheck(product.Autction) && ObjectNullCheck(product.Autction.Lot) && product.Cost < product.Autction.Lot.CostMin) && DataCheck(product.Autction.Start, product.Autction.End);
         }
     }
 }

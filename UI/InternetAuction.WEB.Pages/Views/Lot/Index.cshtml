@@ -31,6 +31,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.AutctionRef)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Autction.Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Autction.End)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -52,6 +58,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AutctionRef)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Autction.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Autction.End)
                 </td>
                 <td>
                     @Html.ActionLink("Bidding", "Create", "Bidding", new { id = item.Id })

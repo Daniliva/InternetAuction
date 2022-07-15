@@ -34,7 +34,7 @@ namespace InternetAuction.BLL.Service
         public async Task AddAsync(LotModel model)
         {
             var product = _mapper.Map<LotModel, Lot>(model);
-            var product = _mapper.Map<LotModel, Lot>(model);
+
             if (!ModelValidation.LotCheck(product))
             {
                 throw new InternetException("Some problem, please check your info!");
