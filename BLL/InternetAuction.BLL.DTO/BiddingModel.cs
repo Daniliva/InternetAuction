@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace InternetAuction.BLL.DTO
 {
@@ -18,6 +19,8 @@ namespace InternetAuction.BLL.DTO
         /// <summary>
         /// Gets or sets the cost.
         /// </summary>
+        [Range(0, float.MaxValue, ErrorMessage = "CostMin must be more than 0")]
+        [DisplayFormat(DataFormatString = "{0:#####.##}")]
         public decimal Cost { get; set; }
 
         /// <summary>

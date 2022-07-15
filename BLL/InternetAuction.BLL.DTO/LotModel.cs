@@ -1,4 +1,6 @@
-﻿namespace InternetAuction.BLL.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace InternetAuction.BLL.DTO
 {
     /// <summary>
     /// The lot model.
@@ -35,6 +37,8 @@
         /// <value>
         /// The name.
         /// </value>
+        [Required(ErrorMessage = "Lot's name")]
+        [StringLength(20, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 4)]
         public virtual string Name { get; set; }
 
         /// <summary>
@@ -43,6 +47,8 @@
         /// <value>
         /// The description.
         /// </value>
+        [Required(ErrorMessage = "Lot's Description")]
+        [StringLength(20, ErrorMessage = "{0} length must be between {2} and {1}.", MinimumLength = 4)]
         public virtual string Description { get; set; }
 
         /// <summary>
@@ -51,6 +57,8 @@
         /// <value>
         /// The cost minimum.
         /// </value>
+        [Range(0, float.MaxValue, ErrorMessage = "CostMin must be more than 0")]
+        [DisplayFormat(DataFormatString = "{0:#####.##}")]
         public virtual decimal CostMin { get; set; }
 
         /// <summary>
@@ -59,9 +67,14 @@
         /// <value>
         /// The photo current.
 
-        //public byte[] PhotoCurrent { get; set; }
-
         public virtual AutctionModel Autction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the autction reference.
+        /// </summary>
+        /// <value>
+        /// The autction reference.
+        /// </value>
         public virtual int AutctionRef { get; set; }
     }
 }
