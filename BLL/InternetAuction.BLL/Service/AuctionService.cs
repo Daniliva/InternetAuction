@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using InternetAuction.BLL.Contract;
+using InternetAuction.BLL.Contract.Validation;
 using InternetAuction.BLL.DTO;
 using InternetAuction.DAL.Contract;
 using InternetAuction.DAL.Entities.MSSQL;
@@ -9,50 +10,98 @@ using System.Threading.Tasks;
 
 namespace InternetAuction.BLL.Service
 {
-	/// <summary>
-	/// The auction service.
-	/// </summary>
-	public class AuctionService : ICrud<AutctionModel, int>
-	{
-		private readonly IUnitOfWorkMSSQL unitOfWorkMSSQL;
-		private readonly IMapper _mapper;
+    /// <summary>
+    /// The auction service.
+    /// </summary>
+    public class AuctionService : ICrud<AutctionModel, int>
+    {
+        private readonly IUnitOfWorkMSSQL unitOfWorkMSSQL;
+        private readonly IMapper _mapper;
 
-		public AuctionService(IUnitOfWorkMSSQL unitOfWorkMSSQL, IMapper mapper)
-		{
-			this.unitOfWorkMSSQL = unitOfWorkMSSQL;
-			_mapper = mapper;
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AuctionService"/> class.
+        /// </summary>
+        /// <param name="unitOfWorkMSSQL">The unit of work MSSQL.</param>
+        /// <param name="mapper">The mapper.</param>
+        public AuctionService(IUnitOfWorkMSSQL unitOfWorkMSSQL, IMapper mapper)
+        {
+            this.unitOfWorkMSSQL = unitOfWorkMSSQL;
+            _mapper = mapper;
+        }
 
-		public async Task AddAsync(AutctionModel model)
-		{
-			var product = _mapper.Map<AutctionModel, Autction>(model);
-			await unitOfWorkMSSQL.AutctionRepository.AddAsync(product);
-		}
+        /// <summary>
+        /// The add async.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        public async Task AddAsync(AutctionModel model)
+        {
+            var product = _mapper.Map<AutctionModel, Autction>(model);
+            if (!ModelValidation.AuctionCheck(product))
+            {
+                throw new InternetException("Some problem, please check your info!");
+            }
 
-		public async Task DeleteAsync(int modelId)
-		{
-			await unitOfWorkMSSQL.AutctionRepository.DeleteByIdAsync(modelId);
-		}
+            await unitOfWorkMSSQL.AutctionRepository.AddAsync(product);
+            await unitOfWorkMSSQL.SaveAsync();
+        }
 
-		public Task DeleteObjectAsync(AutctionModel model)
-		{
-			throw new System.NotImplementedException();
-		}
+        /// <summary>
+        /// The delete async.
+        /// </summary>
+        /// <param name="modelId">The model id.</param>
+        public async Task DeleteAsync(int modelId)
+        {
+            await unitOfWorkMSSQL.AutctionRepository.DeleteByIdAsync(modelId);
+        }
 
-		public async Task<IEnumerable<AutctionModel>> GetAllAsync()
-		{
-			return (await unitOfWorkMSSQL.AutctionRepository.GetAllAsync()).Select((_mapper.Map<Autction, AutctionModel>));
-		}
+        /// <summary>
+        /// Deletes the object asynchronous.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public Task DeleteObjectAsync(AutctionModel model)
+        {
+            throw new System.NotImplementedException();
+        }
 
-		public async Task<AutctionModel> GetByIdAsync(int id)
-		{
-			return _mapper.Map<Autction, AutctionModel>(await unitOfWorkMSSQL.AutctionRepository.GetByIdWithIncludeAsync(id));
-		}
+        /// <summary>
+        /// The get all async.
+        /// </summary>
+        /// <returns>
+        /// The result.
+        /// </returns>
+        public async Task<IEnumerable<AutctionModel>> GetAllAsync()
+        {
+            return (await unitOfWorkMSSQL.AutctionRepository.GetAllAsync()).Select((_mapper.Map<Autction, AutctionModel>));
+        }
 
-		public async Task UpdateAsync(AutctionModel model)
-		{
-			unitOfWorkMSSQL.AutctionRepository.Update(_mapper.Map<AutctionModel, Autction>(model));
-			await unitOfWorkMSSQL.SaveAsync();
-		}
-	}
+        /// <summary>
+        /// The get by id async.
+        /// </summary>
+        /// <param name="id">The id.</param>
+        /// <returns>
+        /// The result.
+        /// </returns>
+        public async Task<AutctionModel> GetByIdAsync(int id)
+        {
+            return _mapper.Map<Autction, AutctionModel>(await unitOfWorkMSSQL.AutctionRepository.GetByIdWithIncludeAsync(id));
+        }
+
+        /// <summary>
+        /// The update async.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        public async Task UpdateAsync(AutctionModel model)
+        {
+            var product = _mapper.Map<AutctionModel, Autction>(model);
+            if (!ModelValidation.AuctionCheck(product))
+            {
+                throw new InternetException("Some problem, please check your info!");
+            }
+            unitOfWorkMSSQL.AutctionRepository.Update(product);
+
+            await unitOfWorkMSSQL.SaveAsync();
+        }
+    }
 }

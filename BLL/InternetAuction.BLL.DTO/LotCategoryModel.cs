@@ -2,6 +2,9 @@
 
 namespace InternetAuction.BLL.DTO
 {
+    /// <summary>
+    /// The lot category model.
+    /// </summary>
     public class LotCategoryModel
     {
         /// <summary>
@@ -11,6 +14,7 @@ namespace InternetAuction.BLL.DTO
         /// The identifier.
         /// </value>
         public int Id { get; set; }
+
         /// <summary>
         /// Gets or sets the name category.
         /// </summary>

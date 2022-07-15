@@ -1,7 +1,16 @@
 ﻿namespace InternetAuction.BLL.DTO
 {
+    /// <summary>
+    /// The lot model.
+    /// </summary>
     public class LotModel
     {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
         public int Id { get; set; }
 
         /// <summary>

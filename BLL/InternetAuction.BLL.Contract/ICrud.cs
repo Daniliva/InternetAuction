@@ -5,14 +5,6 @@ using System.Threading.Tasks;
 namespace InternetAuction.BLL.Contract
 {
     /// <summary>
-    /// The factory.
-    /// </summary>
-    public interface IFactory
-    {
-        T Get<T>();
-    }
-
-    /// <summary>
     /// The i crud.
     /// </summary>
     public interface ICrud<TModel, TKey> where TModel : class

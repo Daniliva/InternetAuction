@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 
 using System.Linq;
+using InternetAuction.BLL.Contract.Validation;
 
 namespace InternetAuction.WEB.Pages.Controllers
 {
@@ -82,10 +83,8 @@ namespace InternetAuction.WEB.Pages.Controllers
                 var result = userService.GetByEmail(collection.Email).Result;
                 return (RedirectToAction(nameof(LogIn)));
             }
-            catch (Exception e)
-            {
-                return (View(collection));
-            }
+            catch (InternetException e) { ModelState.AddModelError("", e.Message); ModelState.AddModelError("", e.Message); return (View(collection)); }
+            catch (Exception e) { return (View(collection)); }
         }
 
         /// <summary>

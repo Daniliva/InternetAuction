@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InternetAuction.DAL.Entities.MSSQL;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -42,5 +43,36 @@ namespace InternetAuction.BLL.Contract.Validation
             return betweenDate > startDate && betweenDate < endDate;
         }
 
+        /// <summary>
+        /// Auctions the check.
+        /// </summary>
+        /// <param name="product">The product.</param>
+        /// <returns></returns>
+        public static bool AuctionCheck(Autction product)
+        {
+            return !(ObjectNullCheck(product) &&
+                ObjectNullCheck(product.Lot) &&
+                ObjectNullCheck(product.Status));
+        }
+
+        /// <summary>
+        /// Users the check.
+        /// </summary>
+        /// <param name="product">The product.</param>
+        /// <returns></returns>
+        public static bool UserCheck(User product)
+        {
+            return !(ObjectNullCheck(product) && ObjectNullCheck(product.RoleUsers) && ObjectNullCheck(product.UserName) && ObjectNullCheck(product.Email))
+        }
+
+        /// <summary>
+        /// Lots the check.
+        /// </summary>
+        /// <param name="product">The product.</param>
+        /// <returns></returns>
+        public static bool LotCheck(Lot product)
+        {
+            return !(ObjectNullCheck(product) && ObjectNullCheck(product.Author) && ObjectNullCheck(product.Autction))
+        }
     }
 }

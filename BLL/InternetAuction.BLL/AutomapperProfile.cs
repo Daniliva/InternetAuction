@@ -6,8 +6,14 @@ using System.Linq;
 
 namespace InternetAuction.BLL
 {
+    /// <summary>
+    /// The automapper profile.
+    /// </summary>
     public class AutomapperProfile : Profile
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutomapperProfile"/> class.
+        /// </summary>
         public AutomapperProfile()
         {
             CreateMap<LotCategory, LotCategoryModel>()

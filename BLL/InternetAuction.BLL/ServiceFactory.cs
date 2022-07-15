@@ -9,10 +9,17 @@ using System.Text;
 
 namespace InternetAuction.BLL
 {
+    /// <summary>
+    /// The service factory.
+    /// </summary>
     public class ServiceFactory : IFactory
     {
         private readonly Dictionary<Type, object> _managerCollection;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceFactory"/> class.
+        /// </summary>
+        /// <param name="unitOfWork">The unit of work.</param>
         public ServiceFactory(IUnitOfWorkMSSQL unitOfWork)
         {
             AutomapperProfile autoMapper = new AutomapperProfile();
@@ -32,6 +39,11 @@ namespace InternetAuction.BLL
             _managerCollection.Add(typeof(IExpansionGetEmail<UserModel, string>), new UserService(unitOfWork, mapper));
         }
 
+        /// <summary>
+        /// Gets this instance.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T Get<T>()
         {
             var type = typeof(T);
@@ -39,8 +51,15 @@ namespace InternetAuction.BLL
         }
     }
 
+    /// <summary>
+    /// The mapping profile.
+    /// </summary>
     public static class MappingProfile
     {
+        /// <summary>
+        /// Initializes the automatic mapper.
+        /// </summary>
+        /// <returns></returns>
         public static MapperConfiguration InitializeAutoMapper()
         {
             MapperConfiguration config = new MapperConfiguration(cfg =>

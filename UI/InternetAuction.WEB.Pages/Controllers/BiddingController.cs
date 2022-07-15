@@ -1,4 +1,5 @@
 ﻿using InternetAuction.BLL.Contract;
+using InternetAuction.BLL.Contract.Validation;
 using InternetAuction.BLL.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -96,11 +97,8 @@ namespace InternetAuction.WEB.Pages.Controllers
                 await biddingService.AddAsync(collection);
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex)
-            {
-                // return View();
-                return RedirectToAction(nameof(Index), id);
-            }
+            catch (InternetException e) { ModelState.AddModelError("", e.Message); ModelState.AddModelError("", e.Message); return (View(collection)); }
+            catch (Exception e) { return RedirectToAction(nameof(Index), id); }
         }
 
         // GET: BiddingController/Delete/5

@@ -2,8 +2,17 @@
 
 namespace InternetAuction.BLL.DTO
 {
+    /// <summary>
+    /// The bidding model.
+    /// </summary>
     public class BiddingModel
     {
+        /// <summary>
+        /// Gets or sets the identifier.
+        /// </summary>
+        /// <value>
+        /// The identifier.
+        /// </value>
         public int Id { get; set; }
 
         /// <summary>

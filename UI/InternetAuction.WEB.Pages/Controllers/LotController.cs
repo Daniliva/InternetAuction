@@ -1,4 +1,5 @@
 ﻿using InternetAuction.BLL.Contract;
+using InternetAuction.BLL.Contract.Validation;
 using InternetAuction.BLL.DTO;
 using InternetAuction.WEB.Domain;
 using Microsoft.AspNetCore.Authorization;
@@ -128,6 +129,7 @@ namespace InternetAuction.WEB.Pages.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+            catch (InternetException e) { ModelState.AddModelError("", e.Message); ModelState.AddModelError("", e.Message); return (View(collection)); }
             catch (Exception e)
             {
                 return RedirectToAction(nameof(Create));
@@ -195,10 +197,8 @@ namespace InternetAuction.WEB.Pages.Controllers
                 await auctionService.UpdateAsync(auction);
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception ex)
-            {
-                return RedirectToAction(nameof(Edit), id);
-            }
+            catch (InternetException e) { ModelState.AddModelError("", e.Message); ModelState.AddModelError("", e.Message); return (View(collection)); }
+            catch (Exception e) { return RedirectToAction(nameof(Edit), id); }
         }
     }
 }

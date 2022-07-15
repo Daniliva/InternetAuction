@@ -2,6 +2,9 @@
 
 namespace InternetAuction.BLL.DTO
 {
+    /// <summary>
+    /// The autction status model.
+    /// </summary>
     public class AutctionStatusModel
     {
         /// <summary>
@@ -11,6 +14,7 @@ namespace InternetAuction.BLL.DTO
         /// The identifier.
         /// </value>
         public int Id { get; set; }
+
         /// <summary>
         /// Gets or sets the name status.
         /// </summary>
@@ -27,6 +31,12 @@ namespace InternetAuction.BLL.DTO
         /// </value>
         public string DescriptionStatus { get; set; }
 
+        /// <summary>
+        /// Gets or sets the autctions.
+        /// </summary>
+        /// <value>
+        /// The autctions.
+        /// </value>
         public ICollection<AutctionModel> Autctions { get; set; }
     }
 }

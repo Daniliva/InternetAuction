@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using InternetAuction.BLL.Contract.Validation;
 
 namespace InternetAuction.WEB.Pages.Controllers
 {
@@ -110,6 +111,10 @@ namespace InternetAuction.WEB.Pages.Controllers
 
                 return RedirectToAction(nameof(ListAsync));
             }
+            catch (InternetException e)
+            {
+                return Redirect("Index");
+            }
             catch (Exception exception)
             {
                 var user = await userService.GetByIdAsync(id);
@@ -157,6 +162,10 @@ namespace InternetAuction.WEB.Pages.Controllers
                 user.Email = collection.Email;
                 await userService.UpdateAsync(user);
                 return RedirectToAction(nameof(Index));
+            }
+            catch (InternetException e)
+            {
+                return (View(collection));
             }
             catch (Exception exception)
             {
