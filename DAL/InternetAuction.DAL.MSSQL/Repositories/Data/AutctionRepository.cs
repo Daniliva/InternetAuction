@@ -52,7 +52,18 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Data
 
         public void Update(Autction entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            var d = GetByIdWithIncludeAsync(entity.Id).Result;
+            if (d != null)
+            {
+                d.Start = entity.Start;
+                //d.Autction = entity.Autction;
+
+                d.End = entity.End;
+                d.Status = entity.Status;
+                _context.Autctions.Update(d);
+                _context.SaveChanges();
+            }
+            // _context.Entry(entity).State = EntityState.Modified;
         }
     }
 }

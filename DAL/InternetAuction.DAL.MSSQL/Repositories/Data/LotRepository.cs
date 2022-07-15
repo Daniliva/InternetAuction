@@ -27,7 +27,8 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Data
             var user = _context.Users.FirstOrDefault(x => x.Id == entity.Author.Id);
             var autctionStatuses = _context.AutctionStatuses.FirstOrDefault(x => x.Id == entity.Autction.Status.Id);
             var lotCategories = _context.LotCategories.First(x => x.Id == entity.Category.Id);
-            lotCategories.Lots = new List<Lot>();
+            if (lotCategories.Lots == null)
+                lotCategories.Lots = new List<Lot>();
             entity.Author = null;
             entity.Autction.Status = null;
             entity.Category = null;
@@ -96,7 +97,7 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Data
         public async Task<Lot> GetByIdWithIncludeAsync(int id)
         {
             return await _context.Lots.
-                Include(x => x.Autction).ThenInclude(x=>x.Status).
+                Include(x => x.Autction).ThenInclude(x => x.Status).
                 Include(x => x.Author).
                 Include(x => x.Category).
                 Include(x => x.PhotoCurrent).
@@ -106,7 +107,32 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Data
 
         public void Update(Lot entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
+            var d = GetByIdWithIncludeAsync(entity.Id).Result;
+
+            if (d != null)
+            {
+                d.CostMin = entity.CostMin;
+                //d.Autction = entity.Autction;
+                d.Name = entity.Name;
+                d.Description = entity.Description;
+                //   d.Category=entity.Category;
+                _context.Lots.Update(d);
+                _context.SaveChanges();
+                var category = _context.LotCategories.First(x => x.Id == entity.Category.Id);
+                if (category.Lots == null)
+                    category.Lots = new List<Lot>();
+                category.Lots.Add(d);
+                _context.LotCategories.Update(category);
+                _context.SaveChanges();
+                //   d.Category.Lots.Remov
+            }
+            /*   var user = _context.Users.FirstOrDefault(x => x.Id == entity.Author.Id);
+               var autctionStatuses = _context.AutctionStatuses.FirstOrDefault(x => x.Id == entity.Autction.Status.Id);
+               var lotCategories = _context.LotCategories.First(x => x.Id == entity.Category.Id);
+               if (lotCategories.Lots == null)
+                   lotCategories.Lots = new List<Lot>();*/
+
+            //     _context.Entry(entity).State = EntityState.Modified;
         }
 
         public async Task Update(Lot entity, Stream imageStream)

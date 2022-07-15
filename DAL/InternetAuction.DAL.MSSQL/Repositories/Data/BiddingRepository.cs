@@ -17,7 +17,19 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Data
 
         public async Task AddAsync(Bidding entity)
         {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == entity.User.Id);
+            var autction = await _context.Autctions.FirstOrDefaultAsync(x => x.Id == entity.Autction.Id);
+            entity.Autction = null;
+            entity.User = null;
             await _context.Biddings.AddAsync(entity);
+            _context.SaveChanges();
+            if (user.Biddings == null)
+                user.Biddings = new List<Bidding>();
+            if (autction.Biddings == null)
+                autction.Biddings = new List<Bidding>();
+            user.Biddings.Add(entity);
+            autction.Biddings.Add(entity);
+            _context.SaveChanges();
         }
 
         public void Delete(Bidding entity)
@@ -47,11 +59,12 @@ namespace InternetAuction.DAL.MSSQL.Repositories.Data
 
         public async Task<Bidding> GetByIdWithIncludeAsync(int id)
         {
-            return await _context.Biddings.
+            var result = await _context.Biddings.
                 Include(x => x.User).
                 Include(x => x.Autction).ThenInclude(x => x.Status).
                 Include(x => x.Autction).ThenInclude(x => x.Lot).
                 FirstOrDefaultAsync(x => x.Id == id);
+            return result;
         }
 
         public void Update(Bidding entity)

@@ -22,8 +22,4 @@
     <ProjectReference Include="..\InternetAuction.WEB.Domain\InternetAuction.WEB.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\" />
-  </ItemGroup>
-
 </Project>

@@ -15,7 +15,6 @@ namespace InternetAuction.WEB.Pages.Controllers
     /// <summary>
     /// The user controller.
     /// </summary>
-
     [Authorize]
     public class UserController : Controller
     {
@@ -44,7 +43,7 @@ namespace InternetAuction.WEB.Pages.Controllers
 				return View(await userService.GetByIdAsync(id));
 			}*/
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Edit(string id)
         {
             var user = await userService.GetByIdAsync(id);
@@ -106,7 +105,7 @@ namespace InternetAuction.WEB.Pages.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<ActionResult> EditPersonalData(string id)
         {
             var user = await userService.GetByIdAsync(id);
@@ -119,7 +118,7 @@ namespace InternetAuction.WEB.Pages.Controllers
             return NotFound();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> EditPersonalData(string id, UserModel collection)
