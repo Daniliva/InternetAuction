@@ -1,0 +1,342 @@
+diff --git a/Rules/InternetAuction.Rules/AuctionBook.cs b/Rules/InternetAuction.Rules/AuctionBook.cs
+index 39ae9ad..2653afa 100644
+--- a/Rules/InternetAuction.Rules/AuctionBook.cs
++++ b/Rules/InternetAuction.Rules/AuctionBook.cs
+@@ -17,7 +17,20 @@ public sealed class AuctionBook
+     /// <param name="end">End (UTC), must be after start (ArgumentException otherwise).</param>
+     public void Open(int auctionId, string lotOwnerId, decimal startingPrice, DateTime start, DateTime end)
+     {
+-        throw new NotImplementedException("TODO");
++        if (end <= start)
++        {
++            throw new ArgumentException("The end must be after the start.", nameof(end));
++        }
++
++        lock (this.gate)
++        {
++            if (this.auctions.ContainsKey(auctionId))
++            {
++                throw new ArgumentException("The auction is already registered.", nameof(auctionId));
++            }
++
++            this.auctions[auctionId] = new State(lotOwnerId, startingPrice, start, end);
++        }
+     }
+ 
+     /// <summary>
+@@ -31,14 +44,28 @@ public sealed class AuctionBook
+     /// <returns>The decision.</returns>
+     public BidDecision Place(int auctionId, string bidderId, decimal amount, DateTime now)
+     {
+-        throw new NotImplementedException("TODO");
++        lock (this.gate)
++        {
++            var state = this.Find(auctionId);
++            var decision = BiddingRules.Decide(state.ToSnapshot(auctionId), bidderId, amount, now);
++            if (decision.Accepted)
++            {
++                state.Bids.Add(new Bid(bidderId, amount, now));
++                state.End = decision.NewEnd;
++            }
++
++            return decision;
++        }
+     }
+ 
+     /// <summary>Marks the auction cancelled (idempotent). Unknown auction: KeyNotFoundException.</summary>
+     /// <param name="auctionId">The auction.</param>
+     public void Cancel(int auctionId)
+     {
+-        throw new NotImplementedException("TODO");
++        lock (this.gate)
++        {
++            this.Find(auctionId).Cancelled = true;
++        }
+     }
+ 
+     /// <summary>A copy of the auction's current state (the bids are copied too). Unknown auction: KeyNotFoundException.</summary>
+@@ -46,7 +73,10 @@ public sealed class AuctionBook
+     /// <returns>The snapshot.</returns>
+     public AuctionSnapshot Snapshot(int auctionId)
+     {
+-        throw new NotImplementedException("TODO");
++        lock (this.gate)
++        {
++            return this.Find(auctionId).ToSnapshot(auctionId);
++        }
+     }
+ 
+     private State Find(int id) => this.auctions.TryGetValue(id, out var s) ? s : throw new KeyNotFoundException($"Auction {id} not found.");
+diff --git a/Rules/InternetAuction.Rules/AuctionLifecycle.cs b/Rules/InternetAuction.Rules/AuctionLifecycle.cs
+index ba5626e..2af086e 100644
+--- a/Rules/InternetAuction.Rules/AuctionLifecycle.cs
++++ b/Rules/InternetAuction.Rules/AuctionLifecycle.cs
+@@ -11,7 +11,22 @@ public static class AuctionLifecycle
+     /// <returns>The state.</returns>
+     public static AuctionState StateAt(AuctionSnapshot auction, DateTime now)
+     {
+-        throw new NotImplementedException("TODO");
++        if (auction == null)
++        {
++            throw new ArgumentNullException(nameof(auction));
++        }
++
++        if (auction.Cancelled)
++        {
++            return AuctionState.Cancelled;
++        }
++
++        if (now < auction.Start)
++        {
++            return AuctionState.Planned;
++        }
++
++        return now < auction.End ? AuctionState.Active : AuctionState.Closed;
+     }
+ 
+     /// <summary>The highest bid; on equal amounts the one placed first wins. Null when there are no bids.</summary>
+@@ -19,7 +34,21 @@ public static class AuctionLifecycle
+     /// <returns>The winning bid or null.</returns>
+     public static Bid? Winner(IEnumerable<Bid> bids)
+     {
+-        throw new NotImplementedException("TODO");
++        if (bids == null)
++        {
++            throw new ArgumentNullException(nameof(bids));
++        }
++
++        Bid? best = null;
++        foreach (var bid in bids)
++        {
++            if (best == null || bid.Amount > best.Amount || (bid.Amount == best.Amount && bid.PlacedAt < best.PlacedAt))
++            {
++                best = bid;
++            }
++        }
++
++        return best;
+     }
+ 
+     /// <summary>
+@@ -29,8 +58,5 @@ public static class AuctionLifecycle
+     /// <param name="auction">The auction.</param>
+     /// <param name="now">Current UTC time.</param>
+     /// <returns>Whether to close it.</returns>
+-    public static bool ShouldClose(AuctionSnapshot auction, DateTime now)
+-    {
+-        throw new NotImplementedException("TODO");
+-    }
++    public static bool ShouldClose(AuctionSnapshot auction, DateTime now) => StateAt(auction, now) == AuctionState.Closed;
+ }
+diff --git a/Rules/InternetAuction.Rules/BiddingRules.cs b/Rules/InternetAuction.Rules/BiddingRules.cs
+index 767413d..69fb5eb 100644
+--- a/Rules/InternetAuction.Rules/BiddingRules.cs
++++ b/Rules/InternetAuction.Rules/BiddingRules.cs
+@@ -10,7 +10,8 @@ public static class BiddingRules
+     /// <returns>The current price or null.</returns>
+     public static decimal? CurrentPrice(AuctionSnapshot auction)
+     {
+-        throw new NotImplementedException("TODO");
++        var winner = AuctionLifecycle.Winner(auction.Bids);
++        return winner?.Amount;
+     }
+ 
+     /// <summary>
+@@ -21,7 +22,8 @@ public static class BiddingRules
+     /// <returns>The minimum accepted bid.</returns>
+     public static decimal MinimumNextBid(AuctionSnapshot auction)
+     {
+-        throw new NotImplementedException("TODO");
++        var current = CurrentPrice(auction);
++        return current is null ? auction.StartingPrice : current.Value + Money.MinimumStep(current.Value);
+     }
+ 
+     /// <summary>
+@@ -41,6 +43,44 @@ public static class BiddingRules
+     /// <returns>The decision.</returns>
+     public static BidDecision Decide(AuctionSnapshot auction, string bidderId, decimal amount, DateTime now)
+     {
+-        throw new NotImplementedException("TODO");
++        if (auction == null)
++        {
++            throw new ArgumentNullException(nameof(auction));
++        }
++
++        var minimum = MinimumNextBid(auction);
++        if (!Money.IsValidBidAmount(amount))
++        {
++            return BidDecision.Reject(BidRejection.InvalidAmount, minimum, auction.End);
++        }
++
++        switch (AuctionLifecycle.StateAt(auction, now))
++        {
++            case AuctionState.Cancelled:
++                return BidDecision.Reject(BidRejection.AuctionCancelled, minimum, auction.End);
++            case AuctionState.Planned:
++                return BidDecision.Reject(BidRejection.AuctionNotStarted, minimum, auction.End);
++            case AuctionState.Closed:
++                return BidDecision.Reject(BidRejection.AuctionClosed, minimum, auction.End);
++        }
++
++        if (string.Equals(bidderId, auction.LotOwnerId, StringComparison.Ordinal))
++        {
++            return BidDecision.Reject(BidRejection.OwnerCannotBid, minimum, auction.End);
++        }
++
++        var leader = AuctionLifecycle.Winner(auction.Bids);
++        if (leader != null && string.Equals(leader.BidderId, bidderId, StringComparison.Ordinal))
++        {
++            return BidDecision.Reject(BidRejection.AlreadyHighestBidder, minimum, auction.End);
++        }
++
++        if (amount < minimum)
++        {
++            return BidDecision.Reject(BidRejection.BelowMinimum, minimum, auction.End);
++        }
++
++        var end = auction.End - now < AntiSnipingWindow ? now + AntiSnipingWindow : auction.End;
++        return new BidDecision(true, BidRejection.None, minimum, end);
+     }
+ }
+diff --git a/Rules/InternetAuction.Rules/LoginThrottle.cs b/Rules/InternetAuction.Rules/LoginThrottle.cs
+index 882cc04..32b2889 100644
+--- a/Rules/InternetAuction.Rules/LoginThrottle.cs
++++ b/Rules/InternetAuction.Rules/LoginThrottle.cs
+@@ -21,7 +21,10 @@ public sealed class LoginThrottle
+     /// <returns>Whether login attempts must be refused right now.</returns>
+     public bool IsLocked(string key)
+     {
+-        throw new NotImplementedException("TODO");
++        lock (this.gate)
++        {
++            return this.entries.TryGetValue(key, out var e) && e.LockedUntil is DateTime until && this.clock() < until;
++        }
+     }
+ 
+     /// <summary>
+@@ -31,14 +34,45 @@ public sealed class LoginThrottle
+     /// <param name="key">The account key.</param>
+     public void RegisterFailure(string key)
+     {
+-        throw new NotImplementedException("TODO");
++        lock (this.gate)
++        {
++            var now = this.clock();
++            if (!this.entries.TryGetValue(key, out var e))
++            {
++                e = new Entry();
++                this.entries[key] = e;
++            }
++
++            if (e.LockedUntil is DateTime until)
++            {
++                if (now < until)
++                {
++                    return;
++                }
++
++                e.LockedUntil = null;
++                e.Failures = 0;
++            }
++
++            e.Failures++;
++            if (e.Failures >= this.maxFailures)
++            {
++                e.LockedUntil = now + this.lockout;
++            }
++        }
+     }
+ 
+     /// <summary>A successful login clears the failure counter (and any expired lock). It does not clear an active lock: a locked account cannot log in at all.</summary>
+     /// <param name="key">The account key.</param>
+     public void RegisterSuccess(string key)
+     {
+-        throw new NotImplementedException("TODO");
++        lock (this.gate)
++        {
++            if (this.entries.TryGetValue(key, out var e) && !(e.LockedUntil is DateTime until && this.clock() < until))
++            {
++                _ = this.entries.Remove(key);
++            }
++        }
+     }
+ 
+     private sealed class Entry
+diff --git a/Rules/InternetAuction.Rules/Money.cs b/Rules/InternetAuction.Rules/Money.cs
+index e93c3cf..a387199 100644
+--- a/Rules/InternetAuction.Rules/Money.cs
++++ b/Rules/InternetAuction.Rules/Money.cs
+@@ -8,10 +8,8 @@ public static class Money
+     /// <summary>True for a positive amount with at most two decimal places (cents) that does not exceed <see cref="MaxBid"/>.</summary>
+     /// <param name="amount">The amount.</param>
+     /// <returns>Whether it is a valid money amount for a bid.</returns>
+-    public static bool IsValidBidAmount(decimal amount)
+-    {
+-        throw new NotImplementedException("TODO");
+-    }
++    public static bool IsValidBidAmount(decimal amount) =>
++        amount > 0 && amount <= MaxBid && decimal.Round(amount, 2) == amount;
+ 
+     /// <summary>
+     /// The smallest allowed increase over the current price: 1 % of it, but never less than 1.00 and always rounded UP to whole cents.
+@@ -21,6 +19,7 @@ public static class Money
+     /// <returns>The minimum step.</returns>
+     public static decimal MinimumStep(decimal current)
+     {
+-        throw new NotImplementedException("TODO");
++        var onePercent = Math.Ceiling(current * 0.01m * 100m) / 100m;
++        return Math.Max(1.00m, onePercent);
+     }
+ }
+diff --git a/Rules/InternetAuction.Rules/PasswordMigration.cs b/Rules/InternetAuction.Rules/PasswordMigration.cs
+index 647dd16..e148c69 100644
+--- a/Rules/InternetAuction.Rules/PasswordMigration.cs
++++ b/Rules/InternetAuction.Rules/PasswordMigration.cs
+@@ -31,7 +31,20 @@ public static class PasswordMigration
+     /// <returns>Whether it is already hashed.</returns>
+     public static bool LooksHashed(string? stored)
+     {
+-        throw new NotImplementedException("TODO");
++        if (string.IsNullOrWhiteSpace(stored))
++        {
++            return false;
++        }
++
++        try
++        {
++            var bytes = Convert.FromBase64String(stored);
++            return bytes.Length >= 29 && (bytes[0] == 0x00 || bytes[0] == 0x01);
++        }
++        catch (FormatException)
++        {
++            return false;
++        }
+     }
+ 
+     /// <summary>
+@@ -48,7 +61,24 @@ public static class PasswordMigration
+     /// <returns>The check result.</returns>
+     public static PasswordCheck Check(string? stored, string? provided, IPasswordHasher hasher)
+     {
+-        throw new NotImplementedException("TODO");
++        if (hasher == null)
++        {
++            throw new ArgumentNullException(nameof(hasher));
++        }
++
++        if (string.IsNullOrEmpty(stored) || string.IsNullOrEmpty(provided))
++        {
++            return new PasswordCheck(false, null);
++        }
++
++        if (LooksHashed(stored))
++        {
++            return new PasswordCheck(hasher.Verify(stored, provided), null);
++        }
++
++        return ConstantTimeEquals(stored, provided)
++            ? new PasswordCheck(true, hasher.Hash(provided))
++            : new PasswordCheck(false, null);
+     }
+ 
+     private static bool ConstantTimeEquals(string a, string b)
