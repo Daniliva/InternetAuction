@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetAuction.Rules", "InternetAuction.Rules\InternetAuction.Rules.csproj", "{9479199F-78BE-44E8-804D-9D387BDD201F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InternetAuction.Rules.Tests", "InternetAuction.Rules.Tests\InternetAuction.Rules.Tests.csproj", "{7A367DB5-7D76-41CF-8D7C-3EEDBB05AC46}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9479199F-78BE-44E8-804D-9D387BDD201F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9479199F-78BE-44E8-804D-9D387BDD201F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9479199F-78BE-44E8-804D-9D387BDD201F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9479199F-78BE-44E8-804D-9D387BDD201F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A367DB5-7D76-41CF-8D7C-3EEDBB05AC46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A367DB5-7D76-41CF-8D7C-3EEDBB05AC46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A367DB5-7D76-41CF-8D7C-3EEDBB05AC46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A367DB5-7D76-41CF-8D7C-3EEDBB05AC46}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
